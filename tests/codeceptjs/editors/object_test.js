@@ -60,7 +60,7 @@ Scenario('grid rows and columns', (I) => {
   I.seeNumberOfVisibleElements('.col-md-1', 6);
 });
 
-Scenario('opt in optional properties', async (I) => {
+Scenario('opt-in optional properties', async (I) => {
   I.amOnPage('object-required-properties.html');
 
   // if an editor type "object" is disabled, also the child editors opt-in controls will be disabled.
@@ -80,6 +80,10 @@ Scenario('opt in optional properties', async (I) => {
   I.click('.get-value');
   assert.equal(await I.grabValueFrom('.value'), '{"number":0,"boolean":false}');
 
+});
+
+Scenario('opt-in optional properties open/close', async (I) => {
+  I.amOnPage('object-required-properties.html');
   // Opening and Closing "Edit JSON" should keep opt-in state.
 
   I.click('[data-schemapath="root"] .json-editor-btn-edit');
@@ -96,23 +100,32 @@ Scenario('opt in optional properties', async (I) => {
   I.click('.get-value');
   assert.equal(await I.grabValueFrom('.value'), '{"number":0,"boolean":false}');
 
-  // opt-in string property
+});
 
+Scenario('opt-in optional properties string', async (I) => {
+  I.amOnPage('object-required-properties.html');
+  // opt-in string property
   I.click('[data-schemapath="root.string"] .json-editor-opt-in');
   I.click('.get-value');
   assert.equal(await I.grabValueFrom('.value'), '{"string":"","number":0,"boolean":false}');
 
-  // opt-in array property
+});
 
+Scenario('opt-in optional properties array', async (I) => {
+  I.amOnPage('object-required-properties.html');
+  // opt-in array property
   I.click('[data-schemapath="root.array"] .json-editor-opt-in');
   I.click('.get-value');
-  assert.equal(await I.grabValueFrom('.value'), '{"string":"","number":0,"boolean":false,"array":[]}');
+  assert.equal(await I.grabValueFrom('.value'), '{"number":0,"boolean":false,"array":[]}');
 
+});
+
+Scenario('opt-in optional properties object', async (I) => {
+  I.amOnPage('object-required-properties.html');
   // opt-in object property
-
   I.click('[data-schemapath="root.object"] .json-editor-opt-in');
   I.click('.get-value');
-  assert.equal(await I.grabValueFrom('.value'), '{"string":"","number":0,"boolean":false,"array":[],"object":{"string":"","array":[]}}');
+  assert.equal(await I.grabValueFrom('.value'), '{"number":0,"boolean":false,"object":{"string":"","array":[]}}');
 
   // if an editor type "object" is enabled, also the child editors opt-in controls will be enabled.
   I.dontSeeDisabledAttribute('[data-schemapath="root.object.number"] .json-editor-opt-in');
